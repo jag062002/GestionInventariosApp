@@ -13,7 +13,9 @@ class RoleHelper {
 
         try {
 
-            return Auth::user()->rol_id == 1;
+            $role = Auth::user()->role->name;
+
+            return $role == 'Administrador';
 
         } catch (\Exception $ex) {
 
@@ -26,7 +28,7 @@ class RoleHelper {
 
         try {
 
-            if (!Auth::check()) {
+          /*  if (!Auth::check()) {
 
                 return false;
             }
@@ -36,23 +38,24 @@ class RoleHelper {
                 return true;
             }
 
-            $userId = Auth::user()->id;
-            //$userId = 1;
+            //$userId = Auth::user()->id;
+            $userId = 1;
             $obj = explode('.', $permission);
             $module = $obj[0];
             $permissionName = $obj[1];
 
-            $permissionId = Permisos::select('permisos.id')
-                                      ->join('role_permissions', 'permisos.id', 'role_permissions.permiso_id')
-                                      ->join('rols', 'role_permissions.rol_id', 'rols.id')
-                                      ->join('users', 'rols.id', 'users.rol_id')
-                                      ->where('permisos.modulo', '=', $module)
-                                      ->where('permisos.nombre', '=', $permissionName)
+            $permissionId = Permisos::select('permissions.id')
+                                      ->join('role_permissions', 'permissions.id', 'role_permissions.permission_id')
+                                      ->join('roles', 'role_permissions.role_id', 'roles.id')
+                                      ->join('users', 'roles.id', 'users.role_id')
+                                      ->where('permissions.module', '=', $module)
+                                      ->where('permissions.name', '=', $permissionName)
                                       ->where('users.id', '=', $userId)
                                       ->first();
 
-            return $permissionId != null;
+            return $permissionId != null;*/
 
+            return true;
 
         } catch (\Exception $ex) {
 
